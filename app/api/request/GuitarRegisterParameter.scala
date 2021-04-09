@@ -1,5 +1,8 @@
 package api.request
 
+import play.api.libs.json.Writes
+import play.api.libs.json.Json
+
 /**
   * ギター登録用パラメータ
   *
@@ -8,3 +11,7 @@ package api.request
 case class GuitarRegisterParameter(
     val name: String
 )
+
+object GuitarRegisterParameterRequest {
+  implicit val writes: Writes[GuitarRegisterParameter] = Json.writes[GuitarRegisterParameter]
+}
