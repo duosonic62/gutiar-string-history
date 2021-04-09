@@ -1,0 +1,252 @@
+openapi: 3.0.0
+
+info:
+  title: Strings History
+  description: ギター弦管理用アプリケーション
+  version: 1.0.0
+
+servers:
+  - url: http://undifined.com
+    description: 未定
+
+paths:
+  /v1/guitar:
+    post:
+      tags:
+        - guitar
+      description: ギター登録
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuitarRegisterParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuitarInformation'
+        '400':
+          $ref: '#/components/responses/RequestError'
+        '401':
+          $ref: '#/components/responses/AuthorizationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/SystemError'
+
+    get:
+      tags:
+        - guitar
+      description: ギター一覧
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GuitarInformation'
+        '400':
+          $ref: '#/components/responses/RequestError'
+        '401':
+          $ref: '#/components/responses/AuthorizationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/SystemError'
+
+  /v1/guitar/{guitarId}:
+    get:
+      tags:
+        - guitar
+      description: ギター詳細
+      parameters:
+        - in: path
+          name: guitarId
+          required: true
+          description: ギターID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuitarInformation'
+        '400':
+          $ref: '#/components/responses/RequestError'
+        '401':
+          $ref: '#/components/responses/AuthorizationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/SystemError'
+
+    delete:
+      tags:
+        - guitar
+      description: ギター情報変更
+      parameters:
+        - in: path
+          name: guitarId
+          required: true
+          description: ギターID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/RequestError'
+        '401':
+          $ref: '#/components/responses/AuthorizationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/SystemError'
+    
+  /v1/history:
+    get:
+      tags: 
+       - history
+      description: 弦交換履歴一覧
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeHistory'
+        '400':
+          $ref: '#/components/responses/RequestError'
+        '401':
+          $ref: '#/components/responses/AuthorizationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/SystemError'
+    
+    post:
+      tags:
+        - history
+      description: 弦交換履歴登録
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeHistoryRegisterParameter'
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/RequestError'
+        '401':
+          $ref: '#/components/responses/AuthorizationError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/SystemError'
+
+
+components:
+  responses:
+    RequestError:
+      description: リクエスト不正エラー
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    AuthorizationError:
+      description: 認証エラー
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NotFoundError:
+      description: NotFoundエラー
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    SystemError:
+      description: システムエラー
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    Error:
+      type: object
+      description: 共通エラーオブジェクト
+      required:
+        - code
+        - messsage
+      properties:
+        code:
+          type: integer
+          description: エラーコード
+        message:
+          type: string
+          description: エラーメッセージ
+          
+    GuitarInformation:
+      description: メンバー登録情報
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: ギターID
+        name:
+          type: string
+          description: ギター名
+          minLength: 1
+          maxLength: 64
+
+    GuitarRegisterParameter:
+      description: ギター登録パラメータ
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: ギター名
+          minLength: 1
+          maxLength: 64
+          
+    ChangeHistory:
+      type: object
+      required:
+        - id
+        - date
+      properties:
+        id: 
+          type: string
+          description: 弦交換ID
+        date:
+          type: string
+          format: date
+          description: 弦交換日
+    
+    ChangeHistoryRegisterParameter:
+      description: 弦交換履歴登録パラメータ
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: ギターID
