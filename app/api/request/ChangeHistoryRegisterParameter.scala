@@ -12,6 +12,6 @@ case class ChangeHistoryRegisterParameter(
     val id: String
 )
 
-object ChangeHistoryRegisterParameterRequest {
+object ChangeHistoryRegisterParameter {
   implicit val writes: Writes[ChangeHistoryRegisterParameter] = Json.writes[ChangeHistoryRegisterParameter]
 }

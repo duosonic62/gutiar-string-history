@@ -15,6 +15,6 @@ case class ChangeHistory(
     val date: LocalDateTime
 )
 
-object ChangeHistoryResponse {
+object ChangeHistory {
   implicit val writes: Writes[ChangeHistory] = Json.writes[ChangeHistory]
 }

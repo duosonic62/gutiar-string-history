@@ -12,6 +12,6 @@ case class GuitarRegisterParameter(
     val name: String
 )
 
-object GuitarRegisterParameterRequest {
+object GuitarRegisterParameter {
   implicit val writes: Writes[GuitarRegisterParameter] = Json.writes[GuitarRegisterParameter]
 }
