@@ -1,6 +1,5 @@
 package api.response
 
-import play.api.libs.json.Writes
 import play.api.libs.json.Json
 
 /**
@@ -10,10 +9,10 @@ import play.api.libs.json.Json
   * @param name
   */
 case class GuitarInformation(
-    val id: String,
-    val name: String
+    id: String,
+    name: String
 )
 
-object GuitarInformationResponse {
-  implicit val writes: Writes[GuitarInformation] = Json.writes[GuitarInformation]
+object GuitarInformation {
+  implicit val writes = Json.writes[GuitarInformation]
 }

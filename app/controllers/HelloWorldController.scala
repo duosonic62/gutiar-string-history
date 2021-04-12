@@ -12,8 +12,10 @@ import play.api.libs.json.JsValue
 import play.api.libs.json.Json
 
 class HelloWorldController @Inject() (cc: ControllerComponents) extends AbstractController(cc) {
+    val logger = play.api.Logger("hello")
 
     def hello(): Action[AnyContent] = {
+        logger.info("Hi!")
         val actionBuilder: ActionBuilder[Request, AnyContent] = controllerComponents.actionBuilder
         val json: JsValue = Json.obj("Hello" -> "World!")
         
