@@ -27,6 +27,17 @@ class GuitarController @Inject() (val controllerComponents: ControllerComponents
     }
 
     /**
+      * ギター詳細表示
+      *
+      * @param id
+      * @return ギター詳細
+      */
+    def detail(id: String) = Action { implicit request =>
+        val info = GuitarInformation(id, "stratcaster") 
+        Ok(Json.toJson(info))
+    }
+
+    /**
       * ギター新規登録
       *
       * @return 成功 / 失敗
