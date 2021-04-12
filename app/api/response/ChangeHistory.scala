@@ -2,7 +2,7 @@ package api.response
 
 import play.api.libs.json.Writes
 import play.api.libs.json.Json
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 /**
   * 弦交換履歴情報
@@ -12,7 +12,7 @@ import java.time.LocalDateTime
   */
 case class ChangeHistory(
     val id: String,
-    val date: LocalDateTime
+    val date: LocalDate
 )
 
 object ChangeHistory {
